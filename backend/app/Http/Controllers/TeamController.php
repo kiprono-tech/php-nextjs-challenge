@@ -33,8 +33,7 @@ class TeamController extends BaseController
         $movements_str = get_random_movements($movements_length, $this->movements_domain);
         $movements_final = str_to_array_movements($movements_str, $this->movements);
 
-        return response()->json([   'status' => 'ok',
-                                    'message' => 'Success', 
+        return response()->json([   'status' => 'success',
                                     'data' => $movements_final], 
                                     200); 
 
@@ -66,9 +65,8 @@ class TeamController extends BaseController
         }  catch(\Exception $e){
             // do task when error
             return response()->json(['status' => 'fail',
-                                    'message' => $e->getMessage(), 
-                                'data' => null], 
-                                500);
+                                    'error' => $e->getMessage(), 
+                                    ], 404);
          }
 
          return response()->json([   'status' => 'ok',
