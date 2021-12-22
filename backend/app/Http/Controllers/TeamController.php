@@ -11,11 +11,33 @@ class TeamController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $movements = [
+        'D' => 'Down',
+        'U' => 'Up',
+        'L' => 'Left',
+        'R' => 'Rigth'
+    ];
+
+    protected $movements_domain = [
+        'D',
+        'U', 
+        'L',
+        'R',
+    ];
+
+
     public function getInitialMovements() {
+
+        $movements_length = random_int(env('MIN_RAND'),env('MAX_RAND'));
+        $movements_str = get_random_movements($movements_length, $this->movements_domain);
+        $movements_final = str_to_array_movements($movements_str, $this->movements);
+
         return response()->json([   'status' => 'ok',
                                     'message' => 'Success', 
-                                    'data' => null], 
+                                    'data' => $movements_final], 
                                     200); 
+
+
     }
 
     public function getFinalPosition(Request $request) {
