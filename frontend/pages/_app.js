@@ -22,15 +22,13 @@ const App = ({ Component, pageProps }) => {
 
       </main>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
+      <footer className="flex items-center justify-center w-full h-24 border-t space-x-2">
+      <a
+          className="flex items-center justify-center hover:underline cursor-pointer"
           href="https://maturocha.com.ar"
           target="_blank"
           rel="noopener noreferrer"
-        >
-          By Mati Rocha 🇦🇷
-        </a>
+        >By Mati Rocha</a> ⚡
       </footer>
   
       
