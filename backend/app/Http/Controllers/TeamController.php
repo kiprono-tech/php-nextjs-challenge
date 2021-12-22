@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -40,10 +41,43 @@ class TeamController extends BaseController
 
     }
 
+
+    private function validateValues(Request $request) {
+
+        $this->validate($request, [
+            'initial' => 'required',
+            'items_mov' => 'required',
+        ],
+        [
+            'initial.required' => "Error! El movimiento inicial es requerido para obtener la posición final.",
+            'itmov.required' => "Error! El listado de movimientos es requerido para poder calcular la posición final."
+        ]);
+
+    }
+
     public function getFinalPosition(Request $request) {
-        return response()->json([   'status' => 'ok',
-                                    'message' => 'Success', 
-                                    'data' => null], 
-                                    200); 
+
+        $this->validateValues($request);
+
+        try {
+
+            $final_position = get_final_position($request->initial, $request->items_mov);
+
+        }  catch(\Exception $e){
+            // do task when error
+            return response()->json(['status' => 'fail',
+                                    'message' => $e->getMessage(), 
+                                'data' => null], 
+                                500);
+         }
+
+         return response()->json([   'status' => 'ok',
+            'message' => 'Success', 
+            'data' =>
+                ['movements' => $final_position] 
+            ], 
+         200); 
+
+        
     }
 }
