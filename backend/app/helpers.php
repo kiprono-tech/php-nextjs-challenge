@@ -36,12 +36,12 @@ if (!function_exists('get_final_position')) {
 
   function get_final_position($init, $movements_list) {
 
-    $actual_position = json_decode($init);
+    $actual_position = $init;
     $response = [];
-    foreach (json_decode($movements_list) as $mov) {
+    foreach ($movements_list as $mov) {
       $mov_to_do = get_movement($mov);
-      $actual_position[0] = ($actual_position[0] + $mov_to_do[0]) > 0? $actual_position[0] + $mov_to_do[0] : $actual_position[0];
-      $actual_position[1] = ($actual_position[1] + $mov_to_do[1]) > 0? $actual_position[1] + $mov_to_do[1] : $actual_position[1];
+      $actual_position[0] = ($actual_position[0] + $mov_to_do[0]) >= 0? $actual_position[0] + $mov_to_do[0] : $actual_position[0];
+      $actual_position[1] = ($actual_position[1] + $mov_to_do[1]) >= 0? $actual_position[1] + $mov_to_do[1] : $actual_position[1];
       $response[] = $actual_position;
     }
 
@@ -58,16 +58,16 @@ if (!function_exists('get_movement')) {
     $movement = [];
     switch ($mov) {
       case 'L':
-          $movement = [-1, 0];
+          $movement = [0, -1];
         break;
       case 'R':
-        $movement = [1, 0];
+        $movement = [0, 1];
         break;
       case 'U':
-        $movement = [0, -1];
+        $movement = [-1, 0];
         break;
       case 'D':
-        $movement = [0, 1];
+        $movement = [1, 0];
         break;
     }
 
