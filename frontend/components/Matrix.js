@@ -3,7 +3,7 @@ import { isPosition } from "../helpers/matrix";
 const Matrix = ({n, m, init_position, final_position}) => {
   
   return  <section className="my-4 flex flex-col space-y-4">
-            <table className="table-fixed border border-black border-collapse w-4/5 mx-24">
+            <table className="table-fixed border border-black border-collapse text-sm">
               <tbody className="divide-y divide-gray-400">
                 {Array(n).fill(null).map((vi, i) => (
                   <tr key={`${i}`}>

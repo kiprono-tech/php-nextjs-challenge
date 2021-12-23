@@ -3,6 +3,7 @@ import Matrix from "../Matrix";
 import InfoSection from "../InfoSection";
 
 import {getMovements, getFinalPosition} from "../../lib/team/team-control"
+import { getMaxDimension } from "../../helpers/matrix";
 
 const HomeSection = () => {
 
@@ -13,18 +14,31 @@ const HomeSection = () => {
     init: [0,0],
     final: []
   })
+  const [error, setError] = useState(false)
 
 
+  /* Get movements from API */
   const getMovementsHandler = async() => {
-
-    const movements = await getMovements();
-    setMovements(movements)
+    //Reset info
+    setError(false)
+    setPosition({ ...position, final: [] })
     setFinalMovements([])
+    try {
 
+      //Set movements in state
+      const movements = await getMovements();
+      setMovements(movements)
+      
+
+    } catch (error) {
+      setError(true)
+    } 
   }
 
+  /* Get FINAL position from API */
   const getFinalPositionHandler = async() => {
 
+    //create the data body
     const data = {
       initial: [0,0],
       items_mov: movementsList.map(m =>
@@ -33,8 +47,15 @@ const HomeSection = () => {
     }
 
     const response = await getFinalPosition(data)
+
+    //Set movements and final position to graph
     setFinalMovements(response.data.movements)
     setPosition({ ...position, final: response.data.movements[response.data.movements.length - 1] })
+
+    //If maxDimension of matrix is bigger from actual -> update
+    const maxDimension = getMaxDimension(response.data.movements)
+    if (maxDimension[0] > dimensionMatrix[0] && maxDimension[1] > dimensionMatrix[1])
+      setdimensionMatrix([maxDimension, maxDimension])
     
   }
   
@@ -60,6 +81,8 @@ const HomeSection = () => {
          Object.values(m)[0]
         )} />
 
+      {error && <small className="text-red-600 text-center">Ups! Ha ocurrido un error!</small>}
+
       <InfoSection 
         title="Posición final"
         subtitle="POST /api/final-position"
@@ -69,9 +92,6 @@ const HomeSection = () => {
         data={finalMovements &&  finalMovements.map(m =>
           `[${m.toString()}]`
          )}  />
-
-      
-      
   </>;
 
   
