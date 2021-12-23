@@ -17,7 +17,7 @@ Backend
 
 Frontend
 
-1. Node.js or later
+1. Node.js 12.22 or later
 2. npm package manager
 
 ## Frontend Readme
