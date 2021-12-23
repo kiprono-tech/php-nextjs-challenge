@@ -12,12 +12,16 @@ class TeamController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    //Movements allowed
+
     protected $movements = [
         'D' => 'Down',
         'U' => 'Up',
         'L' => 'Left',
         'R' => 'Rigth'
     ];
+
+    //Movements Domain
 
     protected $movements_domain = [
         'D',
@@ -29,8 +33,13 @@ class TeamController extends BaseController
 
     public function getInitialMovements() {
 
+        //NOTE: All the aux functions are in helpers.php
+
+        //Get the random value from MIN and MAX env var
         $movements_length = random_int(env('MIN_RAND'),env('MAX_RAND'));
+        //Get the N random movements
         $movements_str = get_random_movements($movements_length, $this->movements_domain);
+        //COnvert the string to array
         $movements_final = str_to_array_movements($movements_str, $this->movements);
 
         return response()->json([   'status' => 'success',

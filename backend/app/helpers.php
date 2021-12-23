@@ -2,6 +2,7 @@
 
 if (!function_exists('get_random_movements')) {
 
+  //Function to get N random letter from an specific domains letters 
   function get_random_movements($n, $domain) {
 
     $response = '';
@@ -18,6 +19,7 @@ if (!function_exists('get_random_movements')) {
 
 if (!function_exists('str_to_array_movements')) {
 
+  //Convert the string to array
   function str_to_array_movements($str, $domain_arr) {
 
     $response = [];
@@ -33,6 +35,8 @@ if (!function_exists('str_to_array_movements')) {
 }
 
 if (!function_exists('get_final_position')) {
+
+  //Get the final position checking the movement and non negative value
 
   function get_final_position($init, $movements_list) {
 
@@ -52,6 +56,8 @@ if (!function_exists('get_final_position')) {
 }
 
 if (!function_exists('get_movement')) {
+
+  //Get the array to sum checking the movement
 
   function get_movement($mov) {
 
