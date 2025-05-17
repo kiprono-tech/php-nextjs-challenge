@@ -1,4 +1,4 @@
-# Conexa callenge by Mati Rocha
+# Conexa challenge by Vincent Kiprono
 Challenge to job application to Full Stack PHP position
 
 Backend
